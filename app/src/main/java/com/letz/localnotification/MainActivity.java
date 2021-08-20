@@ -12,8 +12,6 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity
 {
     Button button;
-    public final String CHANNEL_ID = "1";
-    int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,30 +25,9 @@ public class MainActivity extends AppCompatActivity
                     counter ++;
                     button.setText("" + counter);
                     if (counter == 5){
-                        startNotification();
                     }
                 }
         );
     }
-
-    public void startNotification() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "1", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            manager.createNotificationChannel(channel);
-            //customize it
-
-            Notification.Builder builder = new Notification.Builder(MainActivity.this, CHANNEL_ID);
-            builder.setSmallIcon(R.drawable.ic_baseline_add_alert_24).setContentTitle("Title").setContentText("Notification Text")
-                    .setPriority(Notification.PRIORITY_DEFAULT);
-
-            //show to user
-            NotificationManagerCompat compat = NotificationManagerCompat.from(MainActivity.this);
-            compat.notify(1, builder.build());
-        }
-
-    }
-
-
 }
 
