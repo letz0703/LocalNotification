@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity
     public final String CHANNEL_ID = "1";
     int counter = 0;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void startNotification() {
+        Intent i = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, 0);
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "1"
                 , NotificationManager.IMPORTANCE_DEFAULT);
 
@@ -48,8 +51,12 @@ public class MainActivity extends AppCompatActivity
         //customize it
 
         Notification.Builder builder = new Notification.Builder(MainActivity.this, CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.ic_baseline_add_alert_24).setContentTitle("Title").setContentText("Notification Text")
-                .setPriority(Notification.PRIORITY_DEFAULT);
+        builder.setSmallIcon(R.drawable.ic_baseline_add_alert_24)
+                .setContentTitle("Title")
+                .setContentText("Notification Text")
+                .setPriority(Notification.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
 
         //show to user
         NotificationManagerCompat compat = NotificationManagerCompat.from(MainActivity.this);
