@@ -10,6 +10,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -43,6 +44,21 @@ public class MainActivity extends AppCompatActivity
     public void startNotification() {
         Intent i = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, 0);
+
+        Intent iAction = new Intent(this, receivers.class);
+        iAction.putExtra("toast", "This is a Notification Message");
+        PendingIntent actionPending = PendingIntent.getBroadcast(this, 0, iAction, 0);
+
+        // create action button
+        Notification.Action action = new Notification.Action.Builder(
+                //icon
+                Icon.createWithResource(this, R.drawable.ic_baseline_add_alert_24)
+                //text of action btn
+                , "Toast Message"
+                // name of the class
+                , actionPending
+        ).build();
+
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "1"
                 , NotificationManager.IMPORTANCE_DEFAULT);
 
@@ -56,7 +72,8 @@ public class MainActivity extends AppCompatActivity
                 .setContentText("Notification Text")
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setActions(action);
 
         //show to user
         NotificationManagerCompat compat = NotificationManagerCompat.from(MainActivity.this);
