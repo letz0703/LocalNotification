@@ -10,6 +10,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
@@ -87,7 +88,8 @@ public class MainActivity extends AppCompatActivity
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setActions(aToast)
-                .setActions(aDismiss);
+                .setActions(aDismiss)
+                .setColor(Color.BLUE);
 
         //show to user
         NotificationManagerCompat compat = NotificationManagerCompat.from(MainActivity.this);
