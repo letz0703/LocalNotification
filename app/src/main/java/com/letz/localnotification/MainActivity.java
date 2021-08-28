@@ -47,17 +47,30 @@ public class MainActivity extends AppCompatActivity
 
         Intent iAction = new Intent(this, receivers.class);
         iAction.putExtra("toast", "This is a Notification Message");
-        PendingIntent actionPending = PendingIntent.getBroadcast(this, 0, iAction, 0);
+        PendingIntent piAction = PendingIntent.getBroadcast(this, 0, iAction, 0);
 
         // create action button
-        Notification.Action action = new Notification.Action.Builder(
+        Notification.Action aToast = new Notification.Action.Builder(
                 //icon
                 Icon.createWithResource(this, R.drawable.ic_baseline_add_alert_24)
                 //text of action btn
                 , "Toast Message"
                 // name of the class
-                , actionPending
+                , piAction
         ).build();
+
+        Intent iDissmiss = new Intent(this, receiverDismiss.class);
+        PendingIntent piDismiss
+                = PendingIntent.getBroadcast(this, 0, iDissmiss, 0);
+        // create action btn
+        Notification.Action aDismiss = new Notification.Action.Builder(
+                Icon.createWithResource(this, R.drawable.ic_baseline_add_alert_24)
+                //text of aToast btn
+                , "Dismiss"
+                // name of the class
+                , piDismiss
+        ).build();
+
 
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "1"
                 , NotificationManager.IMPORTANCE_DEFAULT);
@@ -73,7 +86,8 @@ public class MainActivity extends AppCompatActivity
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
-                .setActions(action);
+                .setActions(aToast)
+                .setActions(aDismiss);
 
         //show to user
         NotificationManagerCompat compat = NotificationManagerCompat.from(MainActivity.this);

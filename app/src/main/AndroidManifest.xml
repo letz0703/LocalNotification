@@ -11,6 +11,7 @@
             android:theme="@style/Theme.LocalNotification">
 <!--        <receiver android:name=".Notification_Receiver" />-->
         <receiver android:name=".receivers" />
+        <receiver android:name=".receiverDismiss" />
         <activity
                 android:name=".MainActivity"
                 android:exported="true">
