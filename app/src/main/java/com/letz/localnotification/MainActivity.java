@@ -10,6 +10,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Build;
@@ -76,9 +78,12 @@ public class MainActivity extends AppCompatActivity
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "1"
                 , NotificationManager.IMPORTANCE_DEFAULT);
 
-        NotificationManager manager = (NotificationManager) MainActivity.this.getSystemService(MainActivity.this.NOTIFICATION_SERVICE);
+//        NotificationManager manager = (NotificationManager) MainActivity.this.getSystemService(MainActivity.this.NOTIFICATION_SERVICE);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         manager.createNotificationChannel(channel);
         //customize it
+        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.android_logo);
+        String text = getResources().getString(R.string.big_text);
 
         Notification.Builder builder = new Notification.Builder(MainActivity.this, CHANNEL_ID);
         builder.setSmallIcon(R.drawable.ic_baseline_add_alert_24)
@@ -89,7 +94,12 @@ public class MainActivity extends AppCompatActivity
                 .setAutoCancel(true)
                 .setActions(aToast)
                 .setActions(aDismiss)
-                .setColor(Color.BLUE);
+                .setColor(Color.BLUE)
+                .setLargeIcon(icon)
+//                .setStyle(new Notification.BigPictureStyle().bigPicture(icon));
+//                set long text
+                .setStyle(new Notification.BigTextStyle().bigText(text));
+
 
         //show to user
         NotificationManagerCompat compat = NotificationManagerCompat.from(MainActivity.this);

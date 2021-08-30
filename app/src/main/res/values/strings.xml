@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Periodic Notification</string>
+    <string name="big_text">
+        Hello everyone! this is letz - small thing that make me happy.
+        I hope It helps your peaceful life.
+    </string>
 </resources>
